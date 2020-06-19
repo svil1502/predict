@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<style>
+form {
+    margin: auto;
+    width: 35%;
+}
+
+.result {
+    margin: auto;
+    width: 35%;
+    border: 1px solid #ccc;
+}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Predicts</title>
+</head>
+<body>
+    {% if args["method"] == "POST" %}
+        {% if args["file_size_error"] %}
+            <h1>Размер файла превышает 1мб.!</h1>
+        {% else %}
+            <h1>Файл успешно загружен.</h1>
+        {% endif %}
+    {% endif %}
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button type="submit">Загрузить</button>
+    </form>
+    <div class="result" align="center">
+
+    	<br> <p style="font-size:50px">Количество товара на ближайшую неделю:</p>
+   		<p style="font-size:50px">{{ args["t"]  }}</p>
+
+</div>
+</body>
+</html>
