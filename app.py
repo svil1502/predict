@@ -29,13 +29,14 @@ from flask import Flask, render_template, request
 
 import joblib
 
-from keras.models import Sequential
+from tensorflow.keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.layers.normalization import BatchNormalization
-from keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, CSVLogger, EarlyStopping
-from keras.optimizers import Adam
-from keras.models import load_model
-from keras import regularizers
+from tensorflow.keras.callbacks import ModelCheckpoint, ReduceLROnPlateau, CSVLogger, EarlyStopping
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.models import load_model
+from tensorflow.keras import regularizers
+from tensorflow.keras.callbacks import ReduceLROnPlateau
 
 #import matplotlib.pyplot as plt
 MAX_FILE_SIZE = 1024 * 1024 + 1
@@ -293,7 +294,7 @@ def index():
         return (model, reduce_lr, checkpointer)
 
     def prediction():
-        model = load_model('test.hdf5')
+        #model = load_model('test.hdf5')
         pred = model.predict(X_predict_scaled).flatten()
         pred = inversed(pred, scaler_filename)
         return pred
@@ -358,7 +359,7 @@ def index():
             result_model = fit_predict(X_train_scaled, y_train, X_predict_scaled, lr)
             (model, reduce_lr, checkpointer) = create_model()
             history = model.fit(X_train_scaled, y_train_scaled,
-                                nb_epoch=100,
+                                epochs =100,
                                 batch_size=12,
                                 verbose=1,
                                 validation_split=0.1,
